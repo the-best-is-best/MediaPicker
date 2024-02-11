@@ -14,8 +14,10 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -24,7 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mediapicker.ui.theme.MediaPickerTheme
 import io.tbib.composerequestpermission.RequestPermission
+import io.tbib.tcomposemediapicker.FilePickerUI
 import io.tbib.tcomposemediapicker.MimeType
+import io.tbib.tcomposemediapicker.MultiFilePickerUI
 import io.tbib.tcomposemediapicker.TMediaPicker
 
 class MainActivity : ComponentActivity() {
@@ -32,13 +36,35 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
+            var value by remember {
+                mutableStateOf("Please Pick Image")
+            }
+            var valueMultiSelect by remember {
+                mutableStateOf("Please Pick Image")
+            }
+
             MediaPickerTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting()
+                    // Greeting()
+
+                    Column {
+                        MultiFilePickerUI(
+                            onMediaPicked = {
+                                Log.d("MediaPicker", "Image URI: $it")
+                                value = "${it.count()} Image Picked"
+                            },
+                            mimeType = MimeType.Image.All,
+                            shape = MaterialTheme.shapes.small,
+                            value = value,
+                            placeholder = {
+                                Text("Select Image")
+                            },
+                        )
+                    }
                 }
             }
         }

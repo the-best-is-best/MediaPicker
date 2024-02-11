@@ -14,7 +14,7 @@ A TCompose Request Permissions library for both Jetpack Compose for android, to 
 Media Picker is available on `mavenCentral()`.
 
 ```kotlin
-implementation("io.github.the-best-is-best:media-picker:1.0.0")
+implementation("io.github.the-best-is-best:media-picker:1.0.2")
 ```
 
 ###  Note:
@@ -63,6 +63,42 @@ implementation("io.github.the-best-is-best:media-picker:1.0.0")
      }
      ...
 
+```
+
+### `Vestion 1.0.2`
+#### `can use simple ui for pick media`
+
+- for pick single media
+```kotlin
+FilePickerUI(
+    onMediaPicked = {
+        Log.d("MediaPicker", "Image URI: $it")
+        value = "Image Picked"
+    },
+    mimeType = MimeType.Image.All,
+    shape = MaterialTheme.shapes.small,
+    value = value,
+    placeholder = {
+        Text("Select Image")
+    },
+)
+
+```
+
+- for pick multi media
+```kotlin
+  MultiFilePickerUI(
+    onMediaPicked = {
+        Log.d("MediaPicker", "Image URI: $it")
+        value = "${it.count()} Image Picked"
+    },
+    mimeType = MimeType.Image.All,
+    shape = MaterialTheme.shapes.small,
+    value = value,
+    placeholder = {
+        Text("Select Image")
+    },
+)
 ```
 
 ### `MimeType` is a sealed class that contains the following types:
